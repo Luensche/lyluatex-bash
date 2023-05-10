@@ -1,8 +1,8 @@
 -- luacheck: ignore ly log self luatexbase internalversion font fonts tex token kpse status ly_opts
 local err, warn, info, log = luatexbase.provides_module({
     name               = "lyluatex",
-    version            = '1.1.5',  --LYLUATEX_VERSION
-    date               = "2023/04/18",  --LYLUATEX_DATE
+    version            = '1.1.5.edited',  --LYLUATEX_VERSION
+    date               = "2023/05/10",  --LYLUATEX_DATE
     description        = "Module lyluatex.",
     author             = "The Gregorio Project  − (see Contributors.md)",
     copyright          = "2015-2023 - jperon and others",
@@ -811,11 +811,13 @@ function Score:lilypond_cmd()
         .. "-dno-point-and-click -djob-count=2 -dno-delete-intermediate-files "
     if self['optimize-pdf'] and self:lilypond_has_TeXGS() then cmd = cmd.."-O TeX-GS -dgs-never-embed-fonts " end
     if self.input_file then
-        cmd = cmd..'-I "'..lib.dirname(self.input_file):gsub('^%./', lfs.currentdir()..'/')..'" '
+        cmd = cmd..'-I '..lib.dirname(self.input_file):gsub('^%./', lfs.currentdir()..'/')..' '
     end
+--[[
     for _, dir in ipairs(extract_includepaths(self.includepaths)) do
-        cmd = cmd..'-I "'..dir:gsub('^%./', lfs.currentdir()..'/')..'" '
+        cmd = cmd..'-I '..dir:gsub('^%./', lfs.currentdir()..'/')..' '
     end
+]]--
     cmd = cmd..'-o "'..self.output..'" '..input
     debug("Command:\n"..cmd)
     return cmd, mode
