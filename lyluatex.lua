@@ -811,7 +811,7 @@ function Score:lilypond_cmd()
         .. "-dno-point-and-click -djob-count=2 -dno-delete-intermediate-files "
     if self['optimize-pdf'] and self:lilypond_has_TeXGS() then cmd = cmd.."-O TeX-GS -dgs-never-embed-fonts " end
     if self.input_file then
-        cmd = cmd..'-I '..lib.dirname(self.input_file):gsub('^%./', lfs.currentdir()..'/')..' '
+        cmd = cmd..'-I "'..lib.dirname(self.input_file):gsub('^%./', lfs.currentdir()..'/')..'" '
     end
 --[[
     for _, dir in ipairs(extract_includepaths(self.includepaths)) do
